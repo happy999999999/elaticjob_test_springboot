@@ -6,7 +6,7 @@ Elastic-Job是一个开源分布式调度解决方案，由两个相互独立的
 
 Elastic-Job-Lite定位为轻量级无中心化解决方案，使用 jar 的形式提供分布式任务的协调服务。
 
-![ElasticJob-Lite Architecture](https://shardingsphere.apache.org/elasticjob/current/img/architecture/elasticjob_lite.png)
+![img](https://raw.githubusercontent.com/happy999999999/images/main/elaticjob_test_springboot/1.png)
 
 ---
 
@@ -81,17 +81,17 @@ elasticjob:
 
 错过任务重执行功能可以使逾期未执行的作业在之前作业执行完成之后立即执行。 举例说明，若作业以每小时为间隔执行，每次执行耗时 30 分钟。如下如图所示。
 
-![定时作业](https://shardingsphere.apache.org/elasticjob/current/img/misfire/job.png)
+![img](https://raw.githubusercontent.com/happy999999999/images/main/elaticjob_test_springboot/2.png)
 
 图中表示作业分别于 12:00，13:00 和 14:00 执行。图中显示的当前时间点为 13:00 的作业执行中。
 
 如果 12：00 开始执行的作业在 13:10 才执行完毕，那么本该由 13:00 触发的作业则错过了触发时间，需要等待至 14:00 的下次作业触发。 如下如图所示。
 
-![错过作业](https://shardingsphere.apache.org/elasticjob/current/img/misfire/job-missed.png)
+![img](https://raw.githubusercontent.com/happy999999999/images/main/elaticjob_test_springboot/3.png)
 
 在开启错过任务重执行功能之后，ElasticJob 将会在上次作业执行完毕后，立刻触发执行错过的作业。如下图所示。
 
-![错过作业重执行](https://shardingsphere.apache.org/elasticjob/current/img/misfire/job-misfire.png)
+![img](https://raw.githubusercontent.com/happy999999999/images/main/elaticjob_test_springboot/4.png)
 
 在 13：00 和 14:00 之间错过的作业将会重新执行。
 
@@ -109,17 +109,17 @@ elasticjob:
 
 失效转移是当前执行作业的临时补偿执行机制，在下次作业运行时，会通过重分片对当前作业分配进行调整。 举例说明，若作业以每小时为间隔执行，每次执行耗时 30 分钟。如下如图所示。
 
-[![定时作业](https://shardingsphere.apache.org/elasticjob/current/img/failover/job.png)](https://shardingsphere.apache.org/elasticjob/current/img/failover/job.png)
+![img](https://raw.githubusercontent.com/happy999999999/images/main/elaticjob_test_springboot/5.png)
 
 图中表示作业分别于 12:00，13:00 和 14:00 执行。图中显示的当前时间点为 13:00 的作业执行中。
 
 如果作业的其中一个分片服务器在 13:10 的时候宕机，那么剩余的 20 分钟应该处理的业务未得到执行，并且需要在 14:00 时才能再次开始执行下一次作业。 也就是说，在不开启失效转移的情况下，位于该分片的作业有 50 分钟空档期。如下如图所示。
 
-[![作业宕机](https://shardingsphere.apache.org/elasticjob/current/img/failover/job-crash.png)](https://shardingsphere.apache.org/elasticjob/current/img/failover/job-crash.png)
+![img](https://raw.githubusercontent.com/happy999999999/images/main/elaticjob_test_springboot/6.png)
 
 在开启失效转移功能之后，ElasticJob 的其他服务器能够在感知到宕机的作业服务器之后，补偿执行该分片作业。如下图所示。
 
-[![补偿执行](https://shardingsphere.apache.org/elasticjob/current/img/failover/job-failover.png)](https://shardingsphere.apache.org/elasticjob/current/img/failover/job-failover.png)
+![img](https://raw.githubusercontent.com/happy999999999/images/main/elaticjob_test_springboot/7.png)
 
 在资源充足的情况下，作业仍然能够在 13:30 完成执行。
 
@@ -143,7 +143,7 @@ elasticjob:
 
 作业运行起来后，服务器、实例、线程、分片的关系图：
 
-![img](https://img2018.cnblogs.com/blog/1693277/201906/1693277-20190625164651698-1822881876.jpg)
+![img](https://raw.githubusercontent.com/happy999999999/images/main/elaticjob_test_springboot/8.png)
 
 创建作业时，需要设置这个作业有多少个分片来执行，如果作业A在机器1上获得了两个分片，那么这两个分片实际上是两个线程（注意是一台机器上获得两个分片，每台机器上装一个elastic-job 服务的情况下），这两个线程共用的是同一个class实例，也就是说这两个分片 会共享 此class实例的成员变量。分片1修改了实例的成员变量，就会被分片2读到，从而影响分片2的作业逻辑。
 
@@ -162,13 +162,13 @@ ElasticJob 中任务分片项的概念，使得任务可以在分布式的环境
 
 举例说明，如果作业分为 4 片，用两台服务器执行，则每个服务器分到 2 片，分别负责作业的 50% 的负载，如下图所示。
 
-![分片作业](https://shardingsphere.apache.org/elasticjob/current/img/elastic/sharding.png)
+![img](https://raw.githubusercontent.com/happy999999999/images/main/elaticjob_test_springboot/9.png)
 
 #### 资源最大限度利用
 
 ElasticJob 提供最灵活的方式，最大限度的提高执行作业的吞吐量。 当新增加作业服务器时，ElasticJob 会通过注册中心的临时节点的变化感知到新服务器的存在，并在下次任务调度的时候重新分片，新的服务器会承载一部分作业分片，如下图所示。
 
-[![作业扩容](https://shardingsphere.apache.org/elasticjob/current/img/elastic/sacle-out.png)](https://shardingsphere.apache.org/elasticjob/current/img/elastic/sacle-out.png)
+![img](https://raw.githubusercontent.com/happy999999999/images/main/elaticjob_test_springboot/10.png)
 
 将分片项设置为大于服务器的数量，最好是大于服务器倍数的数量，作业将会合理的利用分布式资源，动态的分配分片项。
 
@@ -178,7 +178,7 @@ ElasticJob 提供最灵活的方式，最大限度的提高执行作业的吞吐
 
 当作业服务器在运行中宕机时，注册中心同样会通过临时节点感知，并将在下次运行时将分片转移至仍存活的服务器，以达到作业高可用的效果。 本次由于服务器宕机而未执行完的作业，则可以通过失效转移的方式继续执行。如下图所示。
 
-[![作业高可用](https://shardingsphere.apache.org/elasticjob/current/img/elastic/ha.png)](https://shardingsphere.apache.org/elasticjob/current/img/elastic/ha.png)
+![img](https://raw.githubusercontent.com/happy999999999/images/main/elaticjob_test_springboot/11.png)
 
 将分片总数设置为 1，并使用多于 1 台的服务器执行作业，作业将会以 1 主 n 从的方式执行。 一旦执行作业的服务器宕机，等待执行的服务器将会在下次作业启动时替补执行。开启失效转移功能效果更好，如果本次作业在执行过程中宕机，备机会立即替补执行。
 
@@ -327,13 +327,13 @@ elasticjob:
 
 1、进入首页，通过添加按钮自己项目的注册中心。
 
-![image-20210805154730884](/Users/shisheng/Library/Application Support/typora-user-images/image-20210805154730884.png)
+![img](https://raw.githubusercontent.com/happy999999999/images/main/elaticjob_test_springboot/12.png)
 
 2、添加
 
 注册中心名称：自定义。	注册中心地址：zk地址。	命名空间：同配置文件中的命名空间。
 
-![image-20210805154904190](/Users/shisheng/Library/Application Support/typora-user-images/image-20210805154904190.png)
+![img](https://raw.githubusercontent.com/happy999999999/images/main/elaticjob_test_springboot/13.png)
 
 3、连接注册中心后，即可在作业操作中的作业维度和服务器维度进行控制。
 
@@ -341,23 +341,25 @@ elasticjob:
 
 在作业维度中，可以看到当前配置中心的所有作业情况以及对各个作业进行控制。
 
-![image-20210805160226238](/Users/shisheng/Library/Application Support/typora-user-images/image-20210805160226238.png)
+![img](https://raw.githubusercontent.com/happy999999999/images/main/elaticjob_test_springboot/14.png)
 
 可修改的参数：
 
-![image-20210805160507315](/Users/shisheng/Library/Application Support/typora-user-images/image-20210805160507315.png)
+![img](https://raw.githubusercontent.com/happy999999999/images/main/elaticjob_test_springboot/15.png)
 
 #### 服务器维度
 
 服务器维度可以控制各个服务器的状态以及控制每个服务器下每个任务的状态。
 
-![image-20210805160159450](/Users/shisheng/Library/Application Support/typora-user-images/image-20210805160159450.png)
+![img](https://raw.githubusercontent.com/happy999999999/images/main/elaticjob_test_springboot/16.png)
 
-![image-20210805160818385](/Users/shisheng/Library/Application Support/typora-user-images/image-20210805160818385.png)
+![img](https://raw.githubusercontent.com/happy999999999/images/main/elaticjob_test_springboot/17.png)
 
 ----
 
 引用：
+
+测试代码地址：https://github.com/happy999999999/elaticjob_test_springboot
 
 elaticjob代码地址：https://github.com/apache/shardingsphere-elasticjob
 
