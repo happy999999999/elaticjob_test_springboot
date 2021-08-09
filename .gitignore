@@ -19,6 +19,7 @@ hs_err_pid*
 .DS_Store
 .AppleDouble
 .LSOverride
+.gitignore
 
 # Icon must end with two \r
 Icon
