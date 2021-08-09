@@ -13,12 +13,12 @@ import java.util.List;
 public class ThirdJob implements DataflowJob {
     @Override
     public List fetchData(ShardingContext shardingContext) {
-        log.info("sharding item = {},start fetch data",shardingContext.getShardingItem());
-        return Arrays.asList("jack","mack","dasi");
+        log.info("sharding item = {},start fetch data", shardingContext.getShardingItem());
+        return Arrays.asList("jack", "mack", "dasi");
     }
 
     @Override
     public void processData(ShardingContext shardingContext, List list) {
-        log.info("sharding item = {},list={}",shardingContext.getShardingItem(),list.toString());
+        log.info("sharding item = {},list={}", shardingContext.getShardingItem(), list.toString());
     }
 }

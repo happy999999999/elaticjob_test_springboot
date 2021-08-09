@@ -13,8 +13,8 @@ public class SecondJob implements SimpleJob {
     @Override
     public void execute(ShardingContext shardingContext) {
         //do something
-        log.info(this.getClass().getName()+",this context is:"+ shardingContext
-                +", now time is :"+new Date(System.currentTimeMillis()));
+        log.info(this.getClass().getName() + ",this context is:" + shardingContext
+                + ", now time is :" + new Date(System.currentTimeMillis()));
         //通过区分当前分片来执行不同的任务
         switch (shardingContext.getShardingItem()) {
             case 0:

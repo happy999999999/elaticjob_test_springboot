@@ -14,12 +14,12 @@ public class MissedTaskJob implements SimpleJob {
     @SneakyThrows
     @Override
     public void execute(ShardingContext shardingContext) {
-        log.info(this.getClass().getName()+",this context is:"+ shardingContext+", now time is :"+new Date(System.currentTimeMillis()));
+        log.info(this.getClass().getName() + ",this context is:" + shardingContext + ", now time is :" + new Date(System.currentTimeMillis()));
         log.info("thread start sleep");
         long startTime = System.currentTimeMillis();
-        while(true){
+        while (true) {
             long endTime = System.currentTimeMillis();
-            if ((endTime-startTime)/1000>6){
+            if ((endTime - startTime) / 1000 > 6) {
                 break;
             }
         }
