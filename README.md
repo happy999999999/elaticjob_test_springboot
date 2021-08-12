@@ -1,4 +1,4 @@
-<center>Elastic-Job-Lite技术分享</center>
+<center>Elastic-Job-Lite分享</center>
 
 ## 一、简介
 
@@ -16,9 +16,9 @@ Elastic-Job-Lite定位为轻量级无中心化解决方案，使用 jar 的形�
 
 ```xml
 <dependency>
-    <groupId>org.apache.shardingsphere.elasticjob</groupId>
-    <artifactId>elasticjob-lite-spring-boot-starter</artifactId>
-    <version>3.0.0</version>
+            <groupId>org.apache.shardingsphere.elasticjob</groupId>
+            <artifactId>elasticjob-lite-spring-boot-starter</artifactId>
+            <version>3.0.0</version>
 </dependency>
 ```
 
@@ -240,7 +240,7 @@ public class MyJob implements SimpleJob {
 
     @Override
     public void execute(ShardingContext shardingContext) {
-        log.info(this.getClass().getName() + ",this context is:" + shardingContext
+        log.info(this.getClass().getName() + ",this context is:" + shardingContext 
                 + ", now time is :" + new Date(System.currentTimeMillis()));
     }
 }
@@ -302,30 +302,13 @@ elasticjob:
 任务配置：与SimpleJob、DataFlowJob配置不同
 
 ```yaml
-elasticjob:
-  regCenter:
-    serverLists: 192.168.20.176:2181 #zk地址
-    namespace: elasticjob-lite-springboot #命名空间
-  jobs:
-    fourthJobIsScriptJob:
-      elasticJobType: SCRIPT #任务类型为脚本
-      cron: 0/10 * * * * ? #定时任务
-      shardingTotalCount: 3 #分片总数
-      props:
-        script.command.line: "echo SCRIPT Job: " #脚本执行代码
+elasticjob:  regCenter:    serverLists: 192.168.20.176:2181 #zk地址    namespace: elasticjob-lite-springboot #命名空间  jobs:    fourthJobIsScriptJob:      elasticJobType: SCRIPT #任务类型为脚本      cron: 0/10 * * * * ? #定时任务      shardingTotalCount: 3 #分片总数      props:        script.command.line: "echo SCRIPT Job: " #脚本执行代码
 ```
 
 ### 5、ShardingContext属性介绍
 
 ```java
-public final class ShardingContext {
-    private final String jobName;						//作业名称
-    private final String taskId;						//作业id
-    private final int shardingTotalCount;		//作业分片总数
-    private final String jobParameter;			//自定义参数
-    private final int shardingItem;					//当前分片序列号
-    private final String shardingParameter;	//当前分片序列号对应的参数
-}
+public final class ShardingContext {    private final String jobName;						//作业名称    private final String taskId;						//作业id    private final int shardingTotalCount;		//作业分片总数    private final String jobParameter;			//自定义参数    private final int shardingItem;					//当前分片序列号    private final String shardingParameter;	//当前分片序列号对应的参数}
 ```
 
 ---
