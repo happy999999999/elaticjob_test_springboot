@@ -1,6 +1,6 @@
 elasticjob:
   regCenter:
-    serverLists: 192.168.20.176:2181 #zk地址
+    serverLists: 192.168.9.55:2181 #zk地址
     namespace: elasticjob-lite-springboot #命名空间
   jobs:
     myJob:

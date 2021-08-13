@@ -2,7 +2,7 @@
 <configuration debug="false" scan="true" scanPeriod="1 seconds">
 
     <contextName>logback</contextName>
-    <property name="log.path" value="../../logs/elaticjob_test_springboot/elaticjob_test_springboot.log"/>
+    <property name="log.path" value="../logs/elaticjob_test/elaticjob_test.log"/>
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
